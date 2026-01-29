@@ -689,6 +689,62 @@ npx jest --coverage
 
 ---
 
+## AWS Deployment
+
+The application can be deployed to AWS using automated scripts:
+
+### Quick Deployment
+
+```bash
+cd deployment/scripts
+
+# 1. Create RDS Database (~10 min)
+export AWS_REGION=us-east-1
+export PROJECT_NAME=payment-gateway
+export DB_PASSWORD=YourSecurePassword123!
+bash 01-create-rds.sh
+
+# 2. Deploy Backend to ECS Fargate (~5 min)
+bash 02-deploy-backend.sh
+
+# 3. Deploy Frontend to S3 + CloudFront (~15 min)
+bash 03-deploy-frontend.sh
+
+# 4. Update CORS with CloudFront URL
+export CLOUDFRONT_URL=https://dxxxxxxxxxxxxx.cloudfront.net
+bash 04-update-cors.sh
+```
+
+### Architecture
+
+```
+CloudFront (CDN) → S3 (Static Files)
+        ↓
+ALB → ECS Fargate (Backend) → RDS PostgreSQL
+      ↓
+    ECR (Docker Images)
+```
+
+### Resources Created
+
+- **Frontend**: S3 bucket + CloudFront distribution
+- **Backend**: ECS Fargate cluster + Application Load Balancer + ECR repository
+- **Database**: RDS PostgreSQL (db.t3.micro)
+- **Networking**: VPC, security groups, subnets
+- **Monitoring**: CloudWatch logs
+
+### Cost: ~$56/month
+
+Full documentation: [deployment/AWS_DEPLOYMENT.md](deployment/AWS_DEPLOYMENT.md)
+
+### Cleanup
+
+```bash
+bash cleanup-aws.sh
+```
+
+---
+
 ## Security
 
 | Feature | Implementation |
