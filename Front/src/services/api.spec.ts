@@ -15,7 +15,7 @@ jest.mock('axios', () => {
 const mockInstance = (axios as any).__instance;
 
 // Re-import after mock
-const apiModule = require('./api');
+import * as apiModule from './api';
 
 describe('API Service', () => {
   beforeEach(() => {

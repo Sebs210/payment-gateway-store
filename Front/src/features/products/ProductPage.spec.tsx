@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import productsReducer, { loadProducts } from './productsSlice';
+import productsReducer from './productsSlice';
 import checkoutReducer from '../checkout/checkoutSlice';
 import transactionReducer from '../transaction/transactionSlice';
 import ProductPage from './ProductPage';

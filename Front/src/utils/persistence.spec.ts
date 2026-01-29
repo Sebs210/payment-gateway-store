@@ -1,4 +1,5 @@
-import { saveState, loadState, clearState, PersistedState } from './persistence';
+import { saveState, loadState, clearState } from './persistence';
+import type { PersistedState } from './persistence';
 
 describe('persistence', () => {
   beforeEach(() => {

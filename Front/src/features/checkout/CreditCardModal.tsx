@@ -118,29 +118,44 @@ export default function CreditCardModal() {
   };
 
   const inputClass = (field: string) =>
-    `w-full px-3 py-2.5 border rounded-lg text-sm outline-none transition-colors ${
-      errors[field] ? 'border-error bg-red-50' : 'border-gray-300 focus:border-primary'
+    `w-full px-4 py-3 border-2 rounded-xl text-sm outline-none transition-all ${
+      errors[field]
+        ? 'border-red-300 bg-red-50 focus:border-red-500 focus:ring-2 focus:ring-red-200'
+        : 'border-gray-200 bg-white focus:border-primary focus:ring-2 focus:ring-primary/20'
     }`;
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-surface rounded-2xl shadow-xl w-full max-w-md my-4 max-h-[95vh] overflow-y-auto">
-        <div className="bg-primary text-white px-6 py-4 rounded-t-2xl flex items-center justify-between">
-          <h2 className="text-lg font-bold">Payment Details</h2>
-          <button onClick={() => dispatch(setStep(1))} className="text-white/80 hover:text-white text-xl">
-            &times;
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
+      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md my-4 max-h-[95vh] overflow-y-auto animate-scale-in">
+        <div className="bg-gradient-to-r from-primary to-primary-light text-white px-6 py-5 rounded-t-3xl flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+            </svg>
+            <h2 className="text-xl font-bold">Payment Details</h2>
+          </div>
+          <button
+            onClick={() => dispatch(setStep(1))}
+            className="text-white/80 hover:text-white hover:scale-110 transition-all text-2xl w-8 h-8 flex items-center justify-center"
+          >
+            ×
           </button>
         </div>
 
-        <div className="p-6 space-y-4">
+        <div className="p-6 space-y-5">
           {/* Card Section */}
-          <div className="space-y-3">
-            <h3 className="font-semibold text-text flex items-center gap-2">
-              Credit Card
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="font-bold text-gray-900 text-base flex items-center gap-2">
+                <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                </svg>
+                Credit Card
+              </h3>
               {brand !== 'unknown' && (
-                <img src={brandLogos[brand]} alt={brand} className="h-6" />
+                <img src={brandLogos[brand]} alt={brand} className="h-7 opacity-80" />
               )}
-            </h3>
+            </div>
 
             <div>
               <input
@@ -192,8 +207,13 @@ export default function CreditCardModal() {
           </div>
 
           {/* Delivery Section */}
-          <div className="space-y-3 pt-2 border-t border-gray-200">
-            <h3 className="font-semibold text-text">Delivery Information</h3>
+          <div className="space-y-4 pt-2 border-t-2 border-gray-100">
+            <h3 className="font-bold text-gray-900 text-base flex items-center gap-2">
+              <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+              Delivery Information
+            </h3>
 
             <div>
               <input
@@ -252,10 +272,14 @@ export default function CreditCardModal() {
           </div>
 
           <button
+            type="button"
             onClick={handleSubmit}
-            className="w-full bg-primary text-white py-3 rounded-lg font-bold text-base hover:bg-primary-light transition-colors"
+            className="w-full bg-gradient-to-r from-primary to-primary-light text-white py-4 rounded-xl font-bold text-base shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2"
           >
             Continue to Summary
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
           </button>
         </div>
       </div>
