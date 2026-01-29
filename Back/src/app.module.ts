@@ -52,6 +52,7 @@ import { ProductSeed } from './infrastructure/database/seeds/product.seed';
         database: config.get('database.database'),
         entities: [Product, Customer, Transaction, Delivery],
         synchronize: true,
+        ssl: config.get('database.host') !== 'localhost' ? { rejectUnauthorized: false } : false,
       }),
     }),
     TypeOrmModule.forFeature([Product, Customer, Transaction, Delivery]),
