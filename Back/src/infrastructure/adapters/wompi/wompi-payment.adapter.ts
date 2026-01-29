@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
+import * as crypto from 'crypto';
 import {
   PaymentGatewayPort,
   TokenizeCardDto,
@@ -13,11 +14,13 @@ export class WompiPaymentAdapter implements PaymentGatewayPort {
   private readonly baseUrl: string;
   private readonly publicKey: string;
   private readonly privateKey: string;
+  private readonly integrityKey: string;
 
   constructor(private readonly config: ConfigService) {
     this.baseUrl = this.config.get<string>('PAYMENT_GATEWAY_API_URL', 'https://api-sandbox.co.uat.wompi.dev/v1');
     this.publicKey = this.config.get<string>('PAYMENT_GATEWAY_PUBLIC_KEY', 'pub_stagtest_g2u0HQd3ZMh05hsSgTS2lUV8t3s4mOt7');
     this.privateKey = this.config.get<string>('PAYMENT_GATEWAY_PRIVATE_KEY', 'prv_stagtest_5i0ZGIGiFcDQifYsXxvsny7Y37tKqFWg');
+    this.integrityKey = this.config.get<string>('PAYMENT_GATEWAY_INTEGRITY_KEY', 'stagtest_integrity_nAIBuqayW70XpUqJS4qf4STYiISd89Fp');
   }
 
   async tokenizeCard(card: TokenizeCardDto): Promise<{ tokenId: string; brand: string }> {
@@ -54,7 +57,13 @@ export class WompiPaymentAdapter implements PaymentGatewayPort {
     };
   }
 
+  private generateSignature(reference: string, amountInCents: number, currency: string): string {
+    const raw = `${reference}${amountInCents}${currency}${this.integrityKey}`;
+    return crypto.createHash('sha256').update(raw).digest('hex');
+  }
+
   async createTransaction(data: CreateGatewayTransactionDto): Promise<GatewayTransactionResponse> {
+    const signature = this.generateSignature(data.reference, data.amountInCents, data.currency);
     const response = await axios.post(
       `${this.baseUrl}/transactions`,
       {
@@ -62,6 +71,7 @@ export class WompiPaymentAdapter implements PaymentGatewayPort {
         currency: data.currency,
         customer_email: data.customerEmail,
         reference: data.reference,
+        signature,
         payment_method: {
           type: data.paymentMethod.type,
           installments: data.paymentMethod.installments,

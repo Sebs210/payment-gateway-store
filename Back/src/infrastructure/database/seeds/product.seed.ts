@@ -40,7 +40,7 @@ export class ProductSeed {
         name: 'Mechanical Gaming Keyboard',
         description: 'RGB backlit mechanical keyboard with Cherry MX switches, programmable macros, and aircraft-grade aluminum frame.',
         priceCents: 12000000,
-        imageUrl: 'https://images.unsplash.com/photo-1541140532154-b024d1c0c78e?w=500',
+        imageUrl: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500',
         stock: 30,
       },
       {
@@ -54,7 +54,7 @@ export class ProductSeed {
         name: 'Wireless Charging Pad',
         description: 'Fast wireless charger compatible with all Qi-enabled devices. Sleek minimalist design with LED indicator and overheat protection.',
         priceCents: 4500000,
-        imageUrl: 'https://images.unsplash.com/photo-1586816879360-004f5b0c51e3?w=500',
+        imageUrl: 'https://images.unsplash.com/photo-1615526675159-e248c3021d3f?w=500',
         stock: 60,
       },
     ];

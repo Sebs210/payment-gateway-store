@@ -1,5 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Transaction } from '../../services/api';
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import type { Transaction } from '../../services/api';
 
 interface TransactionState {
   current: Transaction | null;

@@ -7,8 +7,8 @@ import {
   formatCardNumber,
   formatExpiry,
   validateExpiry,
-  CardBrand,
 } from '../../utils/cardValidator';
+import type { CardBrand } from '../../utils/cardValidator';
 
 const brandLogos: Record<CardBrand, string> = {
   visa: 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg',

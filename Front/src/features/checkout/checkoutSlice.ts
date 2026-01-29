@@ -1,5 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { loadState, saveState, clearState, PersistedState } from '../../utils/persistence';
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { loadState, saveState, clearState } from '../../utils/persistence';
+import type { PersistedState } from '../../utils/persistence';
 
 export interface CustomerInfo {
   email: string;

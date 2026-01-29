@@ -1,6 +1,7 @@
 import { Controller, Get, Param, Inject } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
-import { PRODUCT_REPOSITORY, ProductRepositoryPort } from '../../domain/ports/product.repository.port';
+import { PRODUCT_REPOSITORY } from '../../domain/ports/product.repository.port';
+import type { ProductRepositoryPort } from '../../domain/ports/product.repository.port';
 
 @ApiTags('Products')
 @Controller('products')

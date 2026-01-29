@@ -2,9 +2,12 @@ import { Inject, Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { Result } from './result';
 import { Transaction, TransactionStatus } from '../entities/transaction.entity';
-import { PRODUCT_REPOSITORY, ProductRepositoryPort } from '../ports/product.repository.port';
-import { CUSTOMER_REPOSITORY, CustomerRepositoryPort } from '../ports/customer.repository.port';
-import { TRANSACTION_REPOSITORY, TransactionRepositoryPort } from '../ports/transaction.repository.port';
+import { PRODUCT_REPOSITORY } from '../ports/product.repository.port';
+import type { ProductRepositoryPort } from '../ports/product.repository.port';
+import { CUSTOMER_REPOSITORY } from '../ports/customer.repository.port';
+import type { CustomerRepositoryPort } from '../ports/customer.repository.port';
+import { TRANSACTION_REPOSITORY } from '../ports/transaction.repository.port';
+import type { TransactionRepositoryPort } from '../ports/transaction.repository.port';
 
 export interface CreateTransactionInput {
   productId: string;

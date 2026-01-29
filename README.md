@@ -480,6 +480,71 @@ Front/
 
 **Swagger documentation**: Available at `http://localhost:3001/api/docs`
 
+### cURL Examples (Full Payment Flow)
+
+**1. List all products:**
+```bash
+curl -s http://localhost:3001/api/products | jq
+```
+
+**2. Create a transaction (PENDING):**
+```bash
+curl -s -X POST http://localhost:3001/api/transactions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "productId": "<PRODUCT_UUID>",
+    "quantity": 1,
+    "customerEmail": "john@example.com",
+    "customerFullName": "John Doe",
+    "customerPhone": "+573001234567",
+    "customerAddress": "Calle 123 #45-67",
+    "customerCity": "Bogota"
+  }' | jq
+```
+
+**3. Tokenize a credit card:**
+```bash
+curl -s -X POST http://localhost:3001/api/transactions/tokenize \
+  -H "Content-Type: application/json" \
+  -d '{
+    "number": "4242424242424242",
+    "cvc": "789",
+    "expMonth": "12",
+    "expYear": "29",
+    "cardHolder": "John Doe"
+  }' | jq
+```
+> Sandbox test cards: `4242424242424242` (APPROVED), `4111111111111111` (DECLINED)
+
+**4. Get acceptance tokens:**
+```bash
+curl -s http://localhost:3001/api/transactions/acceptance/token | jq
+```
+
+**5. Complete payment:**
+```bash
+curl -s -X POST http://localhost:3001/api/transactions/<TRANSACTION_UUID>/pay \
+  -H "Content-Type: application/json" \
+  -d '{
+    "cardToken": "tok_stagtest_...",
+    "installments": 1,
+    "acceptanceToken": "eyJ...",
+    "acceptPersonalAuth": "eyJ..."
+  }' | jq
+```
+
+**6. Check transaction status:**
+```bash
+curl -s http://localhost:3001/api/transactions/<TRANSACTION_UUID> | jq
+```
+
+### Postman Collection
+
+Import the Swagger spec directly into Postman:
+1. Open Postman → **Import** → **Link**
+2. Enter: `http://localhost:3001/api/docs-json`
+3. All endpoints will be imported with schemas and examples
+
 ---
 
 ## Business Flow

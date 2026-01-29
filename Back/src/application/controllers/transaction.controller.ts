@@ -5,8 +5,10 @@ import { CompletePaymentDto } from '../dtos/complete-payment.dto';
 import { TokenizeCardDto } from '../dtos/tokenize-card.dto';
 import { CreateTransactionUseCase } from '../../domain/use-cases/create-transaction.use-case';
 import { CompletePaymentUseCase } from '../../domain/use-cases/complete-payment.use-case';
-import { PAYMENT_GATEWAY, PaymentGatewayPort } from '../../domain/ports/payment-gateway.port';
-import { TRANSACTION_REPOSITORY, TransactionRepositoryPort } from '../../domain/ports/transaction.repository.port';
+import { PAYMENT_GATEWAY } from '../../domain/ports/payment-gateway.port';
+import type { PaymentGatewayPort } from '../../domain/ports/payment-gateway.port';
+import { TRANSACTION_REPOSITORY } from '../../domain/ports/transaction.repository.port';
+import type { TransactionRepositoryPort } from '../../domain/ports/transaction.repository.port';
 
 @ApiTags('Transactions')
 @Controller('transactions')
@@ -72,8 +74,10 @@ export class TransactionController {
     try {
       return await this.paymentGateway.tokenizeCard(dto);
     } catch (error) {
+      const detail = error.response?.data || error.message || 'Unknown error';
+      console.error('Tokenization error:', JSON.stringify(detail));
       throw new HttpException(
-        `Card tokenization failed: ${error.message || 'Unknown error'}`,
+        { message: 'Card tokenization failed', detail },
         HttpStatus.BAD_REQUEST,
       );
     }

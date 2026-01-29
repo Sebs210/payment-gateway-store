@@ -1,11 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Result } from './result';
 import { Transaction, TransactionStatus } from '../entities/transaction.entity';
-import { TRANSACTION_REPOSITORY, TransactionRepositoryPort } from '../ports/transaction.repository.port';
-import { PAYMENT_GATEWAY, PaymentGatewayPort } from '../ports/payment-gateway.port';
-import { PRODUCT_REPOSITORY, ProductRepositoryPort } from '../ports/product.repository.port';
-import { DELIVERY_REPOSITORY, DeliveryRepositoryPort } from '../ports/delivery.repository.port';
-import { CUSTOMER_REPOSITORY, CustomerRepositoryPort } from '../ports/customer.repository.port';
+import { TRANSACTION_REPOSITORY } from '../ports/transaction.repository.port';
+import type { TransactionRepositoryPort } from '../ports/transaction.repository.port';
+import { PAYMENT_GATEWAY } from '../ports/payment-gateway.port';
+import type { PaymentGatewayPort } from '../ports/payment-gateway.port';
+import { PRODUCT_REPOSITORY } from '../ports/product.repository.port';
+import type { ProductRepositoryPort } from '../ports/product.repository.port';
+import { DELIVERY_REPOSITORY } from '../ports/delivery.repository.port';
+import type { DeliveryRepositoryPort } from '../ports/delivery.repository.port';
+import { CUSTOMER_REPOSITORY } from '../ports/customer.repository.port';
+import type { CustomerRepositoryPort } from '../ports/customer.repository.port';
 
 export interface CompletePaymentInput {
   transactionId: string;
@@ -88,6 +93,6 @@ export class CompletePaymentUseCase {
       }
     }
 
-    return Result.ok(updatedTransaction);
+    return Result.ok(updatedTransaction!);
   }
 }
