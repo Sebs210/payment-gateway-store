@@ -2,6 +2,23 @@
 
 A complete e-commerce application with credit card payment processing powered by a payment gateway (Sandbox). Implements a 5-step checkout flow with real-time stock management, transaction tracking, and delivery assignment.
 
+## 🚀 Live Deployment
+
+**Frontend (AWS S3):** <http://payment-gateway-frontend-1769664372.s3-website-us-east-1.amazonaws.com>
+
+**Backend API (AWS ECS Fargate):** <http://payment-gateway-alb-1199123350.us-east-1.elb.amazonaws.com/api>
+
+**Swagger Docs:** <http://payment-gateway-alb-1199123350.us-east-1.elb.amazonaws.com/api/docs>
+
+**GitHub Repository:** <https://github.com/Sebs210/payment-gateway-store>
+
+### Test Payment Credentials
+
+- **Card Number:** `4242424242424242` (APPROVED)
+- **CVC:** Any 3 digits (e.g., `123`)
+- **Expiry:** Any future date (e.g., `12/28`)
+- **Card Holder:** Any name
+
 ---
 
 ## Table of Contents
